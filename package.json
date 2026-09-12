@@ -8,7 +8,7 @@
   },
   "scripts": {
     "art": "tsx tools/build-sprites.ts",
-    "maps": "node -e \"\"",
+    "maps": "tsx tools/build-maps.ts",
     "assets": "npm run art && npm run maps",
     "dev": "npm run assets && vite",
     "build": "npm run assets && tsc --noEmit && vite build",

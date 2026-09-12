@@ -12,6 +12,8 @@ O jogo precisa de sprites, retratos de 96×96 px e tiles. Não há ilustrador no
 
 Descrever cada imagem como uma matriz de caracteres em `art/sprites/*.txt`, mapeada em uma paleta de 32 cores em `art/palette.json`, e gerar os PNGs com o script `tools/build-sprites.ts`.
 
+Os mapas seguem o mesmo princípio: cada mapa é um arquivo ASCII em `maps/`, convertido por `tools/build-maps.ts` para o formato JSON do Tiled. O JSON gerado abre no editor Tiled para inspeção, mas a fonte versionada é o arquivo ASCII.
+
 ## Motivações
 
 - Ajustes pedidos em texto ("cabelo mais claro", "óculos maiores") viram edições pequenas e revisáveis em diff.
