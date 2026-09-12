@@ -118,7 +118,7 @@ Tiles de 16×16 px para cinco áreas: casa do Sítio, pomar de jabuticabeiras, b
 
 ### Texto e som
 
-- Fonte bitmap com suporte a acentos e cedilha (á, â, ã, é, ê, í, ó, ô, õ, ú, ç)
+- Fonte Pixelify Sans, com suporte a acentos e cedilha (á, â, ã, é, ê, í, ó, ô, õ, ú, ç), conforme ADR-004
 - Efeitos sonoros sintetizados com Web Audio (acerto, erro, passo, coleta), sem arquivos de áudio
 
 ## 5. Arquitetura
