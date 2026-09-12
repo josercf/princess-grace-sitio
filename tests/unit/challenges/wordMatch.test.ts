@@ -36,6 +36,6 @@ describe('wordMatch', () => {
 
   it('dica mostra o primeiro par', () => {
     const q = { pairs: [{ pt: 'LUA', en: 'MOON' }], left: ['LUA'], right: ['MOON'] };
-    expect(wordMatch.hint(q, 'pt')).toBe('Comece por "LUA". Em inglês, ela é "MOON".');
+    expect(wordMatch.hint(q, 'pt')).toBe('Comece por "LUA". Em inglês: "MOON".');
   });
 });

@@ -28,7 +28,7 @@
     {
       "level": 1,
       "pt": { "text": "A Tia Nastácia fez um ___ de fubá.", "answer": "bolo", "options": ["bolo", "sapo", "milho"] },
-      "en": { "text": "Aunt Nastácia baked a cornmeal ___.", "answer": "cake", "options": ["cake", "frog", "moon"] }
+      "en": { "text": "Aunt Nastácia baked a cornmeal ___.", "answer": "cake", "options": ["cake", "frog", "corn"] }
     },
     {
       "level": 2,

@@ -60,7 +60,7 @@
   "hideout.pedra": "pedra grande",
   "hideout.toca": "toca do tatu",
   "hint.wordBuild": "A palavra começa com \"{first}\" e tem {length} letras.",
-  "hint.wordMatch": "Comece por \"{pt}\". Em inglês, ela é \"{en}\".",
+  "hint.wordMatch": "Comece por \"{pt}\". Em inglês: \"{en}\".",
   "hint.fillSentence": "A palavra começa com \"{first}\".",
   "hint.clueHunt": "Releia esta pista com atenção: {clue}",
   "hint.comprehension": "A resposta está no texto. Procure a palavra \"{keyword}\"."
