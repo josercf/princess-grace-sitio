@@ -1,0 +1,130 @@
+{
+  "vocabulary": [
+    { "pt": "ONÇA", "en": "JAGUAR", "level": 1 },
+    { "pt": "MILHO", "en": "CORN", "level": 1 },
+    { "pt": "BOLO", "en": "CAKE", "level": 1 },
+    { "pt": "SAPO", "en": "FROG", "level": 1 },
+    { "pt": "LUA", "en": "MOON", "level": 1 },
+    { "pt": "ARARA", "en": "MACAW", "level": 1 },
+    { "pt": "PIPOCA", "en": "POPCORN", "level": 2 },
+    { "pt": "BONECA", "en": "DOLL", "level": 2 },
+    { "pt": "MACACO", "en": "MONKEY", "level": 2 },
+    { "pt": "TUCANO", "en": "TOUCAN", "level": 2 },
+    { "pt": "CORUJA", "en": "OWL", "level": 2 },
+    { "pt": "PAÇOCA", "en": "PEANUT CANDY", "level": 2 },
+    { "pt": "JABUTICABA", "en": "JABUTICABA BERRY", "level": 3 },
+    { "pt": "BORBOLETA", "en": "BUTTERFLY", "level": 3 },
+    { "pt": "FOGUEIRA", "en": "BONFIRE", "level": 3 },
+    { "pt": "BANDEIRINHA", "en": "LITTLE FLAG", "level": 3 },
+    { "pt": "PICAPAU", "en": "WOODPECKER", "level": 3 },
+    { "pt": "BRIGADEIRO", "en": "CHOCOLATE FUDGE BALL", "level": 3 }
+  ],
+  "sentences": [
+    {
+      "level": 1,
+      "pt": { "text": "A ___ é o maior felino do Brasil.", "answer": "onça", "options": ["onça", "sapo", "lua"] },
+      "en": { "text": "The ___ is the biggest wild cat in Brazil.", "answer": "jaguar", "options": ["jaguar", "frog", "moon"] }
+    },
+    {
+      "level": 1,
+      "pt": { "text": "A Tia Nastácia fez um ___ de fubá.", "answer": "bolo", "options": ["bolo", "sapo", "milho"] },
+      "en": { "text": "Aunt Nastácia baked a cornmeal ___.", "answer": "cake", "options": ["cake", "frog", "moon"] }
+    },
+    {
+      "level": 2,
+      "pt": { "text": "A ___ Emília fala sem parar.", "answer": "boneca", "options": ["boneca", "pipoca", "coruja"] },
+      "en": { "text": "Emília the rag ___ never stops talking.", "answer": "doll", "options": ["doll", "popcorn", "owl"] }
+    },
+    {
+      "level": 2,
+      "pt": { "text": "O ___ tem um bico grande e colorido.", "answer": "tucano", "options": ["tucano", "macaco", "milho"] },
+      "en": { "text": "The ___ has a big, colourful beak.", "answer": "toucan", "options": ["toucan", "monkey", "corn"] }
+    },
+    {
+      "level": 3,
+      "pt": { "text": "A ___ dá frutinhas roxas grudadas no tronco.", "answer": "jabuticabeira", "options": ["jabuticabeira", "fogueira", "borboleta"] },
+      "en": { "text": "The jabuticaba ___ grows purple berries right on its trunk.", "answer": "tree", "options": ["tree", "bonfire", "butterfly"] }
+    },
+    {
+      "level": 3,
+      "pt": { "text": "Na festa junina, todos dançam em volta da ___.", "answer": "fogueira", "options": ["fogueira", "bandeirinha", "borboleta"] },
+      "en": { "text": "At the June festival, everyone dances around the ___.", "answer": "bonfire", "options": ["bonfire", "little flag", "butterfly"] }
+    }
+  ],
+  "hideouts": [
+    {
+      "id": "jabuticabeira",
+      "clues": {
+        "pt": ["Tem um tronco grosso.", "Dá frutinhas redondas.", "As frutinhas são roxas."],
+        "en": ["It has a thick trunk.", "It grows small round fruit.", "The fruit is purple."]
+      }
+    },
+    {
+      "id": "ribeirao",
+      "clues": {
+        "pt": ["Faz um barulhinho o dia todo.", "Os sapos adoram morar perto.", "É cheio de água fresca."],
+        "en": ["It makes a gentle sound all day.", "Frogs love to live nearby.", "It is full of cool water."]
+      }
+    },
+    {
+      "id": "cerca",
+      "clues": {
+        "pt": ["É feita de madeira.", "Tem várias tábuas em fila.", "Serve para as vacas não fugirem."],
+        "en": ["It is made of wood.", "It has lots of planks in a row.", "It stops the cows from running away."]
+      }
+    },
+    {
+      "id": "milharal",
+      "clues": {
+        "pt": ["As plantas são mais altas que você.", "Ali nasce uma comida amarela.", "É de lá que vem a pipoca."],
+        "en": ["The plants are taller than you.", "A yellow food grows there.", "Popcorn comes from there."]
+      }
+    },
+    {
+      "id": "pedra",
+      "clues": {
+        "pt": ["É dura e fria.", "Não cresce e não se mexe.", "É cinza e muito grande."],
+        "en": ["It is hard and cold.", "It does not grow or move.", "It is grey and very big."]
+      }
+    },
+    {
+      "id": "toca",
+      "clues": {
+        "pt": ["Fica debaixo da terra.", "É um buraco escuro.", "Um bicho de casco mora lá dentro."],
+        "en": ["It is under the ground.", "It is a dark hole.", "An animal with a shell lives inside."]
+      }
+    }
+  ],
+  "legend": {
+    "pt": {
+      "title": "A lenda do Saci",
+      "paragraphs": [
+        "O Saci é um menino de uma perna só. Ele usa um gorro vermelho mágico e pula muito rápido.",
+        "Ele adora fazer travessuras: esconde objetos, dá nó na crina dos cavalos e assobia no meio do mato.",
+        "Dizem que quem consegue pegar o gorro do Saci pode fazer um pedido."
+      ]
+    },
+    "en": {
+      "title": "The legend of Saci",
+      "paragraphs": [
+        "Saci is a boy with only one leg. He wears a magic red cap and hops very fast.",
+        "He loves playing tricks: he hides things, ties knots in horses' manes and whistles in the woods.",
+        "People say that whoever catches Saci's cap can make a wish."
+      ]
+    },
+    "questions": [
+      {
+        "pt": { "prompt": "De que cor é o gorro do Saci?", "answer": "Vermelho", "distractors": ["Azul", "Verde"], "keyword": "gorro" },
+        "en": { "prompt": "What colour is Saci's cap?", "answer": "Red", "distractors": ["Blue", "Green"], "keyword": "cap" }
+      },
+      {
+        "pt": { "prompt": "O que o Saci adora fazer?", "answer": "Travessuras", "distractors": ["Dormir", "Cozinhar"], "keyword": "adora" },
+        "en": { "prompt": "What does Saci love doing?", "answer": "Playing tricks", "distractors": ["Sleeping", "Cooking"], "keyword": "loves" }
+      },
+      {
+        "pt": { "prompt": "O que pode fazer quem pega o gorro?", "answer": "Um pedido", "distractors": ["Ficar invisível", "Virar sapo"], "keyword": "pedido" },
+        "en": { "prompt": "What can someone who catches the cap do?", "answer": "Make a wish", "distractors": ["Become invisible", "Turn into a frog"], "keyword": "wish" }
+      }
+    ]
+  }
+}
