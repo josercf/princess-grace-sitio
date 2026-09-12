@@ -1,0 +1,23 @@
+import Phaser from 'phaser';
+import { ctx } from '../game/context';
+import { addButton, addText, COLORS, FILLS } from '../game/ui';
+
+export class PhaseCompleteScene extends Phaser.Scene {
+  constructor() {
+    super('PhaseCompleteScene');
+  }
+
+  create(): void {
+    const context = ctx(this);
+    this.cameras.main.setBackgroundColor('#4a1f5c');
+    addText(this, 160, 50, context.i18n.t('phase1.complete'), { size: 20, color: COLORS.paper, align: 'center' }).setOrigin(0.5);
+    addText(this, 160, 90, context.i18n.t('phase1.next'), { size: 11, width: 260, color: COLORS.lilac, align: 'center' }).setOrigin(0.5);
+    addButton(this, {
+      id: 'complete-restart', x: 160, y: 140, width: 140, height: 24, label: context.i18n.t('menu.restart'), fill: FILLS.pink,
+      onPress: () => {
+        context.resetProgress();
+        this.scene.start('LanguageScene');
+      },
+    });
+  }
+}

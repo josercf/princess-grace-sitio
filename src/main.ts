@@ -7,6 +7,9 @@ import { BootScene } from './scenes/BootScene';
 import { DialogueScene } from './scenes/DialogueScene';
 import { IntroScene } from './scenes/IntroScene';
 import { LanguageScene } from './scenes/LanguageScene';
+import { MapScene } from './scenes/MapScene';
+import { MenuScene } from './scenes/MenuScene';
+import { PhaseCompleteScene } from './scenes/PhaseCompleteScene';
 
 const game = new Phaser.Game({
   type: Phaser.AUTO,
@@ -17,7 +20,7 @@ const game = new Phaser.Game({
   backgroundColor: '#1a1423',
   scale: { mode: Phaser.Scale.NONE, zoom: integerZoom(window.innerWidth, window.innerHeight) },
   input: { activePointers: 2 },
-  scene: [BootScene, LanguageScene, IntroScene, DialogueScene],
+  scene: [BootScene, LanguageScene, IntroScene, MapScene, DialogueScene, MenuScene, PhaseCompleteScene],
 });
 
 installTestHook(game);
