@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Prévia da arte</title>
+    <style>
+      body { background: #2b2b3a; color: #fff8f0; font-family: sans-serif; padding: 16px; }
+      figure { display: inline-block; margin: 12px; vertical-align: top; }
+      img { image-rendering: pixelated; background: repeating-conic-gradient(#555 0 25%, #666 0 50%) 0 0 / 16px 16px; }
+    </style>
+  </head>
+  <body>
+    <h1>Prévia da arte</h1>
+    <div id="list"></div>
+    <script type="module">
+      const response = await fetch('assets/generated/manifest.json');
+      const { sprites } = await response.json();
+      const list = document.getElementById('list');
+      for (const [name, entry] of Object.entries(sprites)) {
+        const figure = document.createElement('figure');
+        const img = document.createElement('img');
+        img.src = `assets/generated/${entry.file}`;
+        img.width = entry.frameWidth * entry.frames * 4;
+        img.height = entry.frameHeight * 4;
+        const caption = document.createElement('figcaption');
+        caption.textContent = `${name} (${entry.frames} quadros de ${entry.frameWidth}×${entry.frameHeight})`;
+        figure.append(img, caption);
+        list.append(figure);
+      }
+    </script>
+  </body>
+</html>

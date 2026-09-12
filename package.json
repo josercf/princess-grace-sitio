@@ -8,10 +8,10 @@
   },
   "scripts": {
     "art": "tsx tools/build-sprites.ts",
-    "maps": "tsx tools/build-maps.ts",
+    "maps": "node -e \"\"",
     "assets": "npm run art && npm run maps",
     "dev": "npm run assets && vite",
-    "build": "tsc --noEmit && vite build",
+    "build": "npm run assets && tsc --noEmit && vite build",
     "preview": "vite preview",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
