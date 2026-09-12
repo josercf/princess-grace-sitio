@@ -11,7 +11,7 @@
     "maps": "tsx tools/build-maps.ts",
     "assets": "npm run art && npm run maps",
     "dev": "npm run assets && vite",
-    "build": "npm run assets && tsc --noEmit && vite build",
+    "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
