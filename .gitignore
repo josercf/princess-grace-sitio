@@ -4,6 +4,7 @@ public/assets/generated/
 playwright-report/
 test-results/
 .DS_Store
+.superpowers/
 
 # Fotos de referência nunca entram no repositório (ADR-003)
 references/

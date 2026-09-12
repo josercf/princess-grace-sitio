@@ -23,7 +23,7 @@ describe('textos', () => {
 
   it('nenhum arquivo de conteúdo usa travessão', () => {
     for (const file of readdirSync('src/content')) {
-      expect(readFileSync(join('src/content', file), 'utf8'), file).not.toContain('—');
+      expect(readFileSync(join('src/content', file), 'utf8'), file).not.toContain('\u2014');
     }
   });
 });
