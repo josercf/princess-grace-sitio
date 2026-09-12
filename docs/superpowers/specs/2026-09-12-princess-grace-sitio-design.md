@@ -1,7 +1,7 @@
 # Princess Grace no Sítio: design do jogo
 
 - **Data:** 2026-09-12
-- **Status:** aprovado em conversa, aguardando revisão do documento
+- **Status:** plano 1 (fundação e fase 1) implementado; planos 2 (fase 2 e final) e 3 (arte definitiva) pendentes
 - **Repositório:** `josercf/princess-grace-sitio` (público)
 - **Publicação:** GitHub Pages, `https://josercf.github.io/princess-grace-sitio/`
 
@@ -221,6 +221,13 @@ As fotos de referência da criança não entram no repositório nem na pasta do 
 | Progresso salvo inválido ou de versão antiga | Descartado, começa um progresso novo |
 | Chave de texto ausente no idioma escolhido | Usa o texto do outro idioma e registra aviso no console (os testes impedem que isso chegue à produção) |
 | Asset que falha ao carregar | `BootScene` mostra mensagem com botão para tentar de novo |
+
+### Registro de implementação do plano 1
+
+- Mapas escritos em ASCII e convertidos para JSON do Tiled (ADR-002).
+- Fonte Pixelify Sans no lugar de fonte bitmap própria (ADR-004).
+- Nome da coelha digitado em teclado na tela, com três sugestões.
+- Personagens do Sítio, Grace no mapa e coelha usam retângulos coloridos provisórios até o plano 3; o retrato da Grace já é definitivo.
 
 ## 6. Testes
 
