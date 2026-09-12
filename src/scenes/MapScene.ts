@@ -176,7 +176,16 @@ export class MapScene extends Phaser.Scene {
   private runHunt(): Promise<void> {
     const context = ctx(this);
     const question = clueHunt.generate(context.progress.difficulty.level, context.rng, context.i18n.locale);
+    const candidateTiles = question.candidates.map((id) => {
+      const tile = this.hideouts.get(id);
+      if (!tile) throw new Error(`esconderijo ${id} não está no mapa`);
+      return { id, tile };
+    });
+
     this.hunting = true;
+    // A caminhada continua liberada durante a caça de propósito: o mapa tem
+    // 480px de largura e a tela mostra só 320px, então Grace precisa andar
+    // até os esconderijos distantes para trazê-los para dentro da câmera.
     this.busy = false;
 
     const panel = this.add.container(0, 0).setScrollFactor(0).setDepth(90);
@@ -213,9 +222,7 @@ export class MapScene extends Phaser.Scene {
         answering = false;
       };
 
-      for (const id of question.candidates) {
-        const tile = this.hideouts.get(id);
-        if (!tile) throw new Error(`esconderijo ${id} não está no mapa`);
+      for (const { id, tile } of candidateTiles) {
         const marker = addButton(this, {
           id: `hideout-${id}`, x: tile.x * TILE + TILE / 2, y: tile.y * TILE + TILE / 2, width: 60, height: 22, size: 8,
           label: context.i18n.t(`hideout.${id}`), fill: FILLS.lilac, onPress: () => void pick(id),
@@ -228,9 +235,11 @@ export class MapScene extends Phaser.Scene {
   private openMenu(): void {
     if (this.busy) return;
     this.busy = true;
-    this.game.events.once('menu-closed', () => {
+    const onMenuClosed = () => {
       this.busy = false;
-    });
+    };
+    this.game.events.once('menu-closed', onMenuClosed);
+    this.events.once('shutdown', () => this.game.events.off('menu-closed', onMenuClosed));
     this.scene.launch('MenuScene');
     this.scene.bringToTop('MenuScene');
   }
