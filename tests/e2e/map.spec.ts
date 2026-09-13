@@ -15,7 +15,7 @@ async function reachMap(page: Page, locale: 'pt' | 'en'): Promise<string[]> {
 test('personagem fora de ordem pede para falar com outro primeiro', async ({ page }) => {
   const errors = await reachMap(page, 'pt');
   await page.evaluate(() => window.__GAME_TEST__!.interact('visconde'));
-  await expect.poll(() => dialogueText(page)).toBe('Agora não posso. Fale primeiro com: Emília.');
+  await expect.poll(() => dialogueText(page)).toBe('Agora não posso. Primeiro, fale com a Emília.');
   await finishDialogue(page);
   expect(errors).toEqual([]);
 });

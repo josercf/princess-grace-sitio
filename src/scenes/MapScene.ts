@@ -158,7 +158,7 @@ export class MapScene extends Phaser.Scene {
       const step = nextStep(PHASE1_STEPS, context.progress.completed);
       if (!step) return;
       if (step.npc !== id) {
-        await this.say([{ speaker: id, text: context.i18n.t('npc.waiting', { npc: context.i18n.t(`npc.${step.npc}`) }) }]);
+        await this.say([{ speaker: id, text: context.i18n.t('npc.waiting', { npc: context.i18n.t(`npc.ref.${step.npc}`) }) }]);
         return;
       }
       await this.say(step.intro.map((line) => ({ speaker: line.speaker, text: context.i18n.t(line.key) })));
