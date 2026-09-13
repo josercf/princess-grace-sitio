@@ -8,3 +8,19 @@ export function displayZoom(viewWidth: number, viewHeight: number): number {
   if (exact >= 2) return Math.floor(exact);
   return Math.max(1, exact);
 }
+
+// Limite de pixels internos por pixel base; 8 gera um canvas de 2560×1440 (ADR-006).
+export const MAX_RESOLUTION = 8;
+
+export interface RenderScale {
+  displayZoom: number;
+  resolution: number;
+}
+
+// Tamanho CSS do jogo (displayZoom) e pixels internos por pixel base
+// (resolution), para desenhar na densidade real da tela (ADR-006).
+export function renderScale(viewWidth: number, viewHeight: number, devicePixelRatio: number): RenderScale {
+  const zoom = displayZoom(viewWidth, viewHeight);
+  const resolution = Math.min(MAX_RESOLUTION, Math.max(1, Math.round(zoom * devicePixelRatio)));
+  return { displayZoom: zoom, resolution };
+}
