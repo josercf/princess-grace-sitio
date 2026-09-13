@@ -52,7 +52,9 @@ export const comprehension: Challenge<ComprehensionQuestion, string[]> = {
   check(question, answer) {
     return answer.length === question.questions.length && question.questions.every((q, i) => answer[i] === q.answer);
   },
-  hint(question, locale) {
-    return translate(locale, 'hint.comprehension', { keyword: question.questions[0]?.keyword ?? '' });
+  hint(question, locale, answer) {
+    const wrong = answer ? question.questions.find((q, i) => answer[i] !== q.answer) : undefined;
+    const target = wrong ?? question.questions[0];
+    return translate(locale, 'hint.comprehension', { keyword: target?.keyword ?? '' });
   },
 };

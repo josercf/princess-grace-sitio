@@ -45,7 +45,7 @@ export class ChallengeScene extends Phaser.Scene {
         }
 
         usedHint = true;
-        const hint = `${context.i18n.t('challenge.hintBy', { companion: context.progress.companionName ?? '' })} ${challenge.hint(question, context.i18n.locale)}`;
+        const hint = `${context.i18n.t('challenge.hintBy', { companion: context.progress.companionName ?? '' })} ${challenge.hint(question, context.i18n.locale, answer)}`;
         void showDialogue(this, [
           { speaker: 'companion', text: context.i18n.t('challenge.wrong') },
           { speaker: 'companion', text: hint },

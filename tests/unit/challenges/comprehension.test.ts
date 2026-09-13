@@ -43,3 +43,15 @@ describe('comprehension', () => {
     expect(comprehension.hint(q, 'pt')).toBe(`A resposta está no texto. Procure a palavra "${q.questions[0]!.keyword}".`);
   });
 });
+
+describe('comprehension.hint com resposta', () => {
+  it('aponta a palavra-chave da primeira pergunta errada', () => {
+    const q = comprehension.generate(2, createRng(8), 'pt');
+    const first = q.questions[0]!;
+    const second = q.questions[1]!;
+    const wrongSecond = second.options.find((o) => o !== second.answer)!;
+    const hint = comprehension.hint(q, 'pt', [first.answer, wrongSecond]);
+    expect(hint).toContain(second.keyword);
+    expect(hint).not.toContain(`"${first.keyword}"`);
+  });
+});

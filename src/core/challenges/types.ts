@@ -6,5 +6,5 @@ export interface Challenge<Q, A> {
   id: string;
   generate(level: Level, rng: Rng, locale: Locale): Q;
   check(question: Q, answer: A): boolean;
-  hint(question: Q, locale: Locale): string;
+  hint(question: Q, locale: Locale, answer?: A): string;
 }
