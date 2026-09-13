@@ -1,7 +1,7 @@
 import '@fontsource/pixelify-sans/400.css';
 import Phaser from 'phaser';
 import './style.css';
-import { BASE_HEIGHT, BASE_WIDTH, integerZoom } from './core/scale';
+import { BASE_HEIGHT, BASE_WIDTH, displayZoom } from './core/scale';
 import { installTestHook } from './game/testHook';
 import { BootScene } from './scenes/BootScene';
 import { ChallengeScene } from './scenes/ChallengeScene';
@@ -19,7 +19,7 @@ const game = new Phaser.Game({
   height: BASE_HEIGHT,
   pixelArt: true,
   backgroundColor: '#1a1423',
-  scale: { mode: Phaser.Scale.NONE, zoom: integerZoom(window.innerWidth, window.innerHeight) },
+  scale: { mode: Phaser.Scale.NONE, zoom: displayZoom(window.innerWidth, window.innerHeight) },
   input: { activePointers: 2 },
   scene: [BootScene, LanguageScene, IntroScene, MapScene, ChallengeScene, DialogueScene, MenuScene, PhaseCompleteScene],
 });
@@ -27,5 +27,5 @@ const game = new Phaser.Game({
 installTestHook(game);
 
 window.addEventListener('resize', () => {
-  game.scale.setZoom(integerZoom(window.innerWidth, window.innerHeight));
+  game.scale.setZoom(displayZoom(window.innerWidth, window.innerHeight));
 });

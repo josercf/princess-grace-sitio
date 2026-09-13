@@ -80,7 +80,7 @@ Festa junina no terreiro, com fogueira e bandeirinhas. Narizinho e Pedrinho apar
 
 ### Tela
 
-- Orientação horizontal, resolução base de 320×180 px, ampliação em múltiplos inteiros (`pixelArt: true`)
+- Orientação horizontal, resolução base de 320×180 px, ampliação em múltiplos inteiros a partir de 2x e fator fracionário abaixo de 2x, conforme ADR-005 (`pixelArt: true`)
 - Com o celular na vertical, aparece um aviso pedindo para girar
 - Paleta única de 32 cores, com rosa e lilás (Grace), verdes (Sítio) e roxo (jabuticaba)
 
