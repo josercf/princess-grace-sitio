@@ -39,3 +39,14 @@ export async function finishDialogue(page: Page): Promise<void> {
 export async function activeScenes(page: Page): Promise<string[]> {
   return page.evaluate(() => window.__GAME_TEST__!.activeScenes());
 }
+
+export async function seedProgress(page: Page, progress: { locale: 'pt' | 'en'; completed: string[]; level: 1 | 2 | 3 }): Promise<void> {
+  const value = JSON.stringify({
+    version: 1,
+    locale: progress.locale,
+    companionName: 'Mel',
+    completed: progress.completed,
+    difficulty: { level: progress.level, errorStreak: 0, successStreak: 0 },
+  });
+  await page.addInitScript((raw) => window.localStorage.setItem('princess-grace-sitio.progress', raw), value);
+}
