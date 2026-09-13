@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
-import { activeScenes, dialogueText, finishDialogue, startGame, tap } from './helpers';
+import { activeScenes, dialogueText, finishDialogue, finishHuntClues, startGame, tap } from './helpers';
 
 const STEPS = [
   { npc: 'emilia', hunt: false },
@@ -43,6 +43,7 @@ for (const locale of ['pt', 'en'] as const) {
     for (const [index, step] of STEPS.entries()) {
       await page.evaluate((npc) => window.__GAME_TEST__!.interact(npc), step.npc);
       await finishDialogue(page);
+      if (step.hunt) await finishHuntClues(page);
       await solve(page, step.hunt);
       await finishDialogue(page);
       await expect.poll(() => completed(page)).toBe(index + 1);

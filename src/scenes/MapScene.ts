@@ -11,6 +11,9 @@ import { addButton, addText, COLORS, FILLS } from '../game/ui';
 
 const TILE = 16;
 const STEP_MS = 140;
+const MARKER_HEIGHT = 22;
+// Base dos elementos fixos no alto da tela (título, Menu e Pistas).
+const HUD_BOTTOM = 26;
 
 export class MapScene extends Phaser.Scene {
   private grid: boolean[][] = [];
@@ -22,6 +25,7 @@ export class MapScene extends Phaser.Scene {
   private busy = false;
   private hunting = false;
   private walkToken = 0;
+  private worldHeight = 0;
 
   constructor() {
     super('MapScene');
@@ -59,6 +63,7 @@ export class MapScene extends Phaser.Scene {
     this.placeAt(this.grace, this.graceTile);
     this.placeAt(this.companion, { x: this.graceTile.x - 1, y: this.graceTile.y });
 
+    this.worldHeight = map.heightInPixels;
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels).startFollow(this.grace, true).setRoundPixels(true);
 
     this.input.on('pointerup', (pointer: Phaser.Input.Pointer, over: Phaser.GameObjects.GameObject[]) => {
@@ -173,7 +178,17 @@ export class MapScene extends Phaser.Scene {
     }
   }
 
-  private runHunt(): Promise<void> {
+  // Centraliza o marcador no esconderijo, a menos que ele fique sob o HUD
+  // com a câmera no ponto mais baixo do mapa; nesse caso, desce para baixo
+  // do tile.
+  private markerY(tile: Point): number {
+    const centered = tile.y * TILE + TILE / 2;
+    const maxScrollY = Math.max(0, this.worldHeight - this.cameras.main.height);
+    if (centered - MARKER_HEIGHT / 2 - maxScrollY >= HUD_BOTTOM) return centered;
+    return (tile.y + 1) * TILE + MARKER_HEIGHT / 2;
+  }
+
+  private async runHunt(): Promise<void> {
     const context = ctx(this);
     const question = clueHunt.generate(context.progress.difficulty.level, context.rng, context.i18n.locale);
     const candidateTiles = question.candidates.map((id) => {
@@ -183,17 +198,24 @@ export class MapScene extends Phaser.Scene {
     });
 
     this.hunting = true;
+    const clueLines = question.clues.map((clue, i): DialogueLine => ({ speaker: 'saci', text: `${i + 1}. ${clue}` }));
+    await this.say(clueLines);
+
     // A caminhada continua liberada durante a caça de propósito: o mapa tem
     // 480px de largura e a tela mostra só 320px, então Grace precisa andar
     // até os esconderijos distantes para trazê-los para dentro da câmera.
     this.busy = false;
 
-    const panel = this.add.container(0, 0).setScrollFactor(0).setDepth(90);
-    panel.add(this.add.rectangle(160, 44, 304, 40, FILLS.paper).setStrokeStyle(1, FILLS.ink));
-    panel.add(addText(this, 12, 26, question.clues.map((clue, i) => `${i + 1}. ${clue}`).join('\n'), { size: 9, width: 296 }));
-    testState.answerPlan = [`hideout-${question.targetId}`];
+    const cluesButton = addButton(this, {
+      id: 'hunt-clues', x: 243, y: 14, width: 50, height: MARKER_HEIGHT, size: 10, label: context.i18n.t('hunt.clues'), fill: FILLS.lilac,
+      onPress: () => {
+        if (!this.busy) void this.say(clueLines);
+      },
+    })
+      .setScrollFactor(0)
+      .setDepth(100);
 
-    return new Promise((resolve) => {
+    await new Promise<void>((resolve) => {
       let usedHint = false;
       let answering = false;
       const markers: Phaser.GameObjects.Container[] = [];
@@ -206,7 +228,7 @@ export class MapScene extends Phaser.Scene {
         context.save();
         if (correct) {
           markers.forEach((marker) => marker.destroy());
-          panel.destroy();
+          cluesButton.destroy();
           testState.answerPlan = [];
           this.hunting = false;
           this.busy = true;
@@ -217,18 +239,19 @@ export class MapScene extends Phaser.Scene {
         usedHint = true;
         await this.say([
           { speaker: 'saci', text: context.i18n.t('saci.wrong') },
-          { speaker: 'companion', text: `${context.i18n.t('challenge.hintBy', { companion: context.progress.companionName ?? '' })} ${clueHunt.hint(question, context.i18n.locale)}` },
+          { speaker: 'companion', text: `${context.i18n.t('challenge.hintBy', { companion: context.progress.companionName ?? '' })} ${clueHunt.hint(question, context.i18n.locale, id)}` },
         ]);
         answering = false;
       };
 
       for (const { id, tile } of candidateTiles) {
         const marker = addButton(this, {
-          id: `hideout-${id}`, x: tile.x * TILE + TILE / 2, y: tile.y * TILE + TILE / 2, width: 60, height: 22, size: 8,
+          id: `hideout-${id}`, x: tile.x * TILE + TILE / 2, y: this.markerY(tile), width: 60, height: MARKER_HEIGHT, size: 8,
           label: context.i18n.t(`hideout.${id}`), fill: FILLS.lilac, onPress: () => void pick(id),
         }).setDepth(50);
         markers.push(marker);
       }
+      testState.answerPlan = [`hideout-${question.targetId}`];
     });
   }
 

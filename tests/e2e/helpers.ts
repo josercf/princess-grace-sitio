@@ -50,3 +50,17 @@ export async function seedProgress(page: Page, progress: { locale: 'pt' | 'en'; 
   });
   await page.addInitScript((raw) => window.localStorage.setItem('princess-grace-sitio.progress', raw), value);
 }
+
+// A caça abre as pistas em um diálogo logo depois da apresentação do Saci;
+// os marcadores só aparecem quando esse diálogo fecha.
+export async function finishHuntClues(page: Page): Promise<void> {
+  await expect
+    .poll(
+      async () => {
+        if ((await dialogueText(page)) !== null) await tap(page, 'dlg-next');
+        return page.evaluate(() => window.__GAME_TEST__!.answerPlan().length);
+      },
+      { message: 'pistas lidas e marcadores na tela', timeout: 15_000 },
+    )
+    .toBeGreaterThan(0);
+}
