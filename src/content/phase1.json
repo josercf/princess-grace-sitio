@@ -1,7 +1,7 @@
 {
   "vocabulary": [
     { "pt": "ONÇA", "en": "JAGUAR", "level": 1 },
-    { "pt": "MILHO", "en": "CORN", "level": 1 },
+    { "pt": "MILHO", "en": "SWEETCORN", "level": 1 },
     { "pt": "BOLO", "en": "CAKE", "level": 1 },
     { "pt": "SAPO", "en": "FROG", "level": 1 },
     { "pt": "LUA", "en": "MOON", "level": 1 },
@@ -11,7 +11,7 @@
     { "pt": "MACACO", "en": "MONKEY", "level": 2 },
     { "pt": "TUCANO", "en": "TOUCAN", "level": 2 },
     { "pt": "CORUJA", "en": "OWL", "level": 2 },
-    { "pt": "PAÇOCA", "en": "PEANUT CANDY", "level": 2 },
+    { "pt": "PAÇOCA", "en": "PEANUT SWEET", "level": 2 },
     { "pt": "JABUTICABA", "en": "JABUTICABA BERRY", "level": 3 },
     { "pt": "BORBOLETA", "en": "BUTTERFLY", "level": 3 },
     { "pt": "FOGUEIRA", "en": "BONFIRE", "level": 3 },
@@ -28,7 +28,7 @@
     {
       "level": 1,
       "pt": { "text": "A Tia Nastácia fez um ___ de fubá.", "answer": "bolo", "options": ["bolo", "sapo", "milho"] },
-      "en": { "text": "Aunt Nastácia baked a cornmeal ___.", "answer": "cake", "options": ["cake", "frog", "corn"] }
+      "en": { "text": "Aunt Nastácia baked a cornmeal ___.", "answer": "cake", "options": ["cake", "frog", "sweetcorn"] }
     },
     {
       "level": 2,
@@ -38,7 +38,7 @@
     {
       "level": 2,
       "pt": { "text": "O ___ tem um bico grande e colorido.", "answer": "tucano", "options": ["tucano", "macaco", "milho"] },
-      "en": { "text": "The ___ has a big, colourful beak.", "answer": "toucan", "options": ["toucan", "monkey", "corn"] }
+      "en": { "text": "The ___ has a big, colourful beak.", "answer": "toucan", "options": ["toucan", "monkey", "sweetcorn"] }
     },
     {
       "level": 3,
