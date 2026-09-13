@@ -22,7 +22,7 @@ Usar a fonte Pixelify Sans (licença SIL Open Font License), empacotada pelo `@f
 
 | Risco | Mitigação |
 |---|---|
-| Texto pouco nítido com ampliação por CSS em fontes pequenas | Tamanho mínimo de 8 px na resolução base; verificação por captura de tela na task 13; se ilegível, aumentar o tamanho base |
+| Texto pouco nítido com ampliação por CSS em fontes pequenas | Tamanho mínimo de 8 px na resolução base; desde a ADR-006 o canvas e os textos são desenhados na resolução real da tela, sem esticar os glifos pelo CSS |
 | Fonte ainda não carregada na primeira cena | `BootScene` aguarda `document.fonts.load` antes de desenhar texto |
 
 ## Consequências
