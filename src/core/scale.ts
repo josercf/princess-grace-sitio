@@ -18,9 +18,12 @@ export interface RenderScale {
 }
 
 // Tamanho CSS do jogo (displayZoom) e pixels internos por pixel base
-// (resolution), para desenhar na densidade real da tela (ADR-006).
+// (resolution), para desenhar na densidade real da tela (ADR-006). A resolução
+// usa sempre as medidas da tela deitada, porque o jogo só roda na horizontal:
+// assim ela não muda quando o celular gira e os textos não perdem nitidez.
 export function renderScale(viewWidth: number, viewHeight: number, devicePixelRatio: number): RenderScale {
   const zoom = displayZoom(viewWidth, viewHeight);
-  const resolution = Math.min(MAX_RESOLUTION, Math.max(1, Math.round(zoom * devicePixelRatio)));
+  const landscapeZoom = displayZoom(Math.max(viewWidth, viewHeight), Math.min(viewWidth, viewHeight));
+  const resolution = Math.min(MAX_RESOLUTION, Math.max(1, Math.round(landscapeZoom * devicePixelRatio)));
   return { displayZoom: zoom, resolution };
 }

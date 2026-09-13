@@ -33,3 +33,21 @@ test('o canvas desenha na densidade real de pixels da tela', async ({ page }) =>
   }));
   expect(size.internal).toBeGreaterThanOrEqual(0.9 * size.css * size.dpr);
 });
+
+test('girar o celular de pé para deitado mantém a resolução e os botões respondendo', async ({ page }) => {
+  const landscape = page.viewportSize()!;
+  await page.setViewportSize({ width: landscape.height, height: landscape.width });
+  await page.goto('./?e2e=1');
+  const canvas = page.locator('#game canvas');
+  await expect(canvas).toBeAttached();
+  const internalWidth = () => canvas.evaluate((element: HTMLCanvasElement) => element.width);
+  const standing = await internalWidth();
+
+  await page.setViewportSize(landscape);
+  await expect.poll(() => page.evaluate(() => window.__GAME_TEST__?.button('lang-pt') ?? null)).not.toBeNull();
+  expect(await internalWidth()).toBe(standing);
+
+  const point = await page.evaluate(() => window.__GAME_TEST__!.button('lang-pt'));
+  await page.touchscreen.tap(point!.x, point!.y);
+  await expect.poll(() => page.evaluate(() => window.__GAME_TEST__!.progress().locale)).toBe('pt');
+});

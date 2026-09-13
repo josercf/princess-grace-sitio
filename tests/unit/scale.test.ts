@@ -19,6 +19,13 @@ describe('renderScale', () => {
     expect(renderScale(3840, 2160, 3).resolution).toBe(MAX_RESOLUTION);
   });
 
+  it('celular em pé usa a mesma resolução interna de quando está deitado', () => {
+    const standing = renderScale(342, 750, 3);
+    const lying = renderScale(750, 342, 3);
+    expect(standing.resolution).toBe(lying.resolution);
+    expect(standing.displayZoom).toBeCloseTo(342 / 320);
+  });
+
   it('nunca usa resolução menor que 1', () => {
     expect(renderScale(200, 100, 0.5).resolution).toBe(1);
   });
