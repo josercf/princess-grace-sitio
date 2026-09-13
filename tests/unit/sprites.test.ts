@@ -83,6 +83,14 @@ describe('arquivos de arte', () => {
     }
   }
 
+  it.each([
+    ['grace', 24, 32, 16],
+    ['companion', 16, 16, 8],
+  ])('sprite %s do mapa tem quadros de %i×%i para as quatro direções (%i quadros)', (name, width, height, frames) => {
+    const sheet = parseSprite(name, readFileSync(`art/sprites/${name}.txt`, 'utf8'), palette);
+    expect([sheet.width, sheet.height, sheet.frames.length]).toEqual([width, height, frames]);
+  });
+
   it('tileset do pomar tem 5 tiles de 16×16', () => {
     const sheet = parseSprite('pomar', readFileSync('art/tiles/pomar.txt', 'utf8'), palette);
     expect([sheet.width, sheet.height, sheet.frames.length]).toEqual([16, 16, 5]);
