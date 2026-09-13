@@ -15,6 +15,7 @@ export interface GameTestApi {
   interact(npc: string): void;
   progress(): Progress;
   dialogueText(): string | null;
+  walker(id: string): { texture: string; facing: string } | null;
 }
 
 declare global {
@@ -68,5 +69,6 @@ export function installTestHook(game: Phaser.Game): void {
     interact: (npc) => testState.interact?.(npc),
     progress: () => structuredClone(ctx(game.scene.getScene('BootScene')).progress),
     dialogueText: () => testState.dialogueText,
+    walker: (id) => testState.walker?.(id) ?? null,
   };
 }

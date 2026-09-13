@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { clueHunt } from '../core/challenges/clueHunt';
 import { recordAttempt } from '../core/difficulty';
+import { directionOf, type Direction } from '../core/direction';
 import { findPath, neighbors, pathToNeighbor, type Point } from '../core/pathfinding';
 import { isPhaseComplete, nextStep, PHASE1_STEPS, type NpcId } from '../core/phaseFlow';
 import { ctx } from '../game/context';
@@ -8,6 +9,7 @@ import { runChallenge, showDialogue, type DialogueLine } from '../game/overlays'
 import { textureFor } from '../game/placeholders';
 import { testState } from '../game/testState';
 import { addButton, addText, COLORS, FILLS } from '../game/ui';
+import { ensureWalkAnimations, faceIdle, walkAnimationKey } from '../game/walkers';
 
 const TILE = 16;
 const STEP_MS = 140;
@@ -17,9 +19,14 @@ const HUD_BOTTOM = 26;
 
 export class MapScene extends Phaser.Scene {
   private grid: boolean[][] = [];
-  private grace!: Phaser.GameObjects.Image;
-  private companion!: Phaser.GameObjects.Image;
+  private grace!: Phaser.GameObjects.Sprite;
+  private companion!: Phaser.GameObjects.Sprite;
   private graceTile: Point = { x: 1, y: 1 };
+  private companionTile: Point = { x: 0, y: 1 };
+  private graceFacing: Direction = 'down';
+  private companionFacing: Direction = 'down';
+  private graceAnimated = false;
+  private companionAnimated = false;
   private npcs = new Map<NpcId, Point>();
   private hideouts = new Map<string, Point>();
   private busy = false;
@@ -58,10 +65,15 @@ export class MapScene extends Phaser.Scene {
       else if (obj.type === 'hideout') this.hideouts.set(obj.name, tile);
     }
 
-    this.companion = this.add.image(0, 0, textureFor(this, 'companion')).setOrigin(0.5, 1).setDepth(9);
-    this.grace = this.add.image(0, 0, textureFor(this, 'grace')).setOrigin(0.5, 1).setDepth(10);
+    this.graceAnimated = ensureWalkAnimations(this, 'grace');
+    this.companionAnimated = ensureWalkAnimations(this, 'companion');
+    this.graceFacing = 'down';
+    this.companionFacing = 'down';
+    this.companion = this.add.sprite(0, 0, textureFor(this, 'companion')).setOrigin(0.5, 1).setDepth(9);
+    this.grace = this.add.sprite(0, 0, textureFor(this, 'grace')).setOrigin(0.5, 1).setDepth(10);
+    this.companionTile = { x: this.graceTile.x - 1, y: this.graceTile.y };
     this.placeAt(this.grace, this.graceTile);
-    this.placeAt(this.companion, { x: this.graceTile.x - 1, y: this.graceTile.y });
+    this.placeAt(this.companion, this.companionTile);
 
     this.worldHeight = map.heightInPixels;
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels).startFollow(this.grace, true).setRoundPixels(true);
@@ -77,7 +89,13 @@ export class MapScene extends Phaser.Scene {
       .setDepth(100);
 
     testState.interact = (npc) => this.teleportAndInteract(npc as NpcId);
+    testState.walker = (id) => {
+      if (id === 'grace') return { texture: this.grace.texture.key, facing: this.graceFacing };
+      if (id === 'companion') return { texture: this.companion.texture.key, facing: this.companionFacing };
+      return null;
+    };
     this.events.once('shutdown', () => {
+      testState.walker = null;
       testState.interact = null;
     });
 
@@ -100,11 +118,11 @@ export class MapScene extends Phaser.Scene {
     if (row) row[tile.x] = true;
   }
 
-  private placeAt(obj: Phaser.GameObjects.Image, tile: Point): void {
+  private placeAt(obj: Phaser.GameObjects.Image | Phaser.GameObjects.Sprite, tile: Point): void {
     obj.setPosition(tile.x * TILE + TILE / 2, tile.y * TILE + TILE);
   }
 
-  private tweenTo(obj: Phaser.GameObjects.Image, tile: Point): Promise<void> {
+  private tweenTo(obj: Phaser.GameObjects.Sprite, tile: Point): Promise<void> {
     return new Promise((resolve) => {
       this.tweens.add({ targets: obj, x: tile.x * TILE + TILE / 2, y: tile.y * TILE + TILE, duration: STEP_MS, onComplete: () => resolve() });
     });
@@ -115,9 +133,20 @@ export class MapScene extends Phaser.Scene {
     for (const next of path) {
       if (token !== this.walkToken) return;
       const previous = this.graceTile;
+      this.graceFacing = directionOf(previous, next, this.graceFacing);
+      this.companionFacing = directionOf(this.companionTile, previous, this.companionFacing);
       this.graceTile = next;
+      this.companionTile = previous;
+      if (this.graceAnimated) this.grace.play(walkAnimationKey('grace', this.graceFacing), true);
+      if (this.companionAnimated) this.companion.play(walkAnimationKey('companion', this.companionFacing), true);
       await Promise.all([this.tweenTo(this.grace, next), this.tweenTo(this.companion, previous)]);
     }
+    if (token === this.walkToken) this.standStill();
+  }
+
+  private standStill(): void {
+    faceIdle(this.grace, 'grace', this.graceFacing, this.graceAnimated);
+    faceIdle(this.companion, 'companion', this.companionFacing, this.companionAnimated);
   }
 
   private walkTo(target: Point): void {
@@ -139,6 +168,8 @@ export class MapScene extends Phaser.Scene {
     if (path === null) return;
     this.busy = true;
     await this.walkAlong(path);
+    this.graceFacing = directionOf(this.graceTile, target, this.graceFacing);
+    this.standStill();
     this.busy = false;
     await this.interact(id);
   }
@@ -151,6 +182,8 @@ export class MapScene extends Phaser.Scene {
       this.walkToken += 1;
       this.graceTile = free;
       this.placeAt(this.grace, free);
+      this.graceFacing = directionOf(free, target, this.graceFacing);
+      this.standStill();
     }
     void this.interact(id);
   }

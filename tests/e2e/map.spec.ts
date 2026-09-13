@@ -20,6 +20,18 @@ test('personagem fora de ordem pede para falar com outro primeiro', async ({ pag
   expect(errors).toEqual([]);
 });
 
+test('Grace e a coelha usam os bonecos do mapa e a Grace se vira para quem conversa', async ({ page }) => {
+  const errors = await reachMap(page, 'pt');
+  const walker = (id: string) => page.evaluate((name) => window.__GAME_TEST__!.walker(name), id);
+  expect(await walker('grace')).toEqual({ texture: 'sprite-grace', facing: 'down' });
+  expect((await walker('companion'))?.texture).toBe('sprite-companion');
+
+  await page.evaluate(() => window.__GAME_TEST__!.interact('emilia'));
+  await expect.poll(() => dialogueText(page)).not.toBeNull();
+  expect((await walker('grace'))?.facing).toBe('left');
+  expect(errors).toEqual([]);
+});
+
 test('menu troca o idioma e volta ao mapa', async ({ page }) => {
   await reachMap(page, 'pt');
   await tap(page, 'menu');
