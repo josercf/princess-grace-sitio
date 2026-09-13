@@ -7,6 +7,7 @@ import { isPhaseComplete, nextStep, PHASE1_STEPS, type NpcId } from '../core/pha
 import { ctx } from '../game/context';
 import { runChallenge, showDialogue, type DialogueLine } from '../game/overlays';
 import { textureFor } from '../game/placeholders';
+import { useDeviceResolution } from '../game/resolution';
 import { testState } from '../game/testState';
 import { addButton, addText, COLORS, FILLS } from '../game/ui';
 import { ensureWalkAnimations, faceIdle, walkAnimationKey } from '../game/walkers';
@@ -39,6 +40,7 @@ export class MapScene extends Phaser.Scene {
   }
 
   create(): void {
+    useDeviceResolution(this);
     const context = ctx(this);
     this.busy = false;
     this.hunting = false;
@@ -216,7 +218,7 @@ export class MapScene extends Phaser.Scene {
   // do tile.
   private markerY(tile: Point): number {
     const centered = tile.y * TILE + TILE / 2;
-    const maxScrollY = Math.max(0, this.worldHeight - this.cameras.main.height);
+    const maxScrollY = Math.max(0, this.worldHeight - this.cameras.main.displayHeight);
     if (centered - MARKER_HEIGHT / 2 - maxScrollY >= HUD_BOTTOM) return centered;
     return (tile.y + 1) * TILE + MARKER_HEIGHT / 2;
   }

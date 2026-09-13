@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import type { SpeakerId } from '../core/phaseFlow';
 import { ctx, type GameContext } from '../game/context';
 import type { DialogueLine } from '../game/overlays';
+import { useDeviceResolution } from '../game/resolution';
 import { registerTappable } from '../game/testHook';
 import { testState } from '../game/testState';
 import { addText, COLORS, FILLS } from '../game/ui';
@@ -24,6 +25,7 @@ export class DialogueScene extends Phaser.Scene {
   }
 
   create(data: { lines: DialogueLine[] }): void {
+    useDeviceResolution(this);
     this.lines = data.lines;
     this.index = 0;
 

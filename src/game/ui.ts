@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { resolutionOf } from './resolution';
 import { registerTappable } from './testHook';
 
 export const FONT_FAMILY = '"Pixelify Sans", sans-serif';
@@ -31,8 +32,11 @@ export interface TextOptions {
   align?: 'left' | 'center';
 }
 
+// A textura do texto usa a resolução interna do canvas para os glifos
+// coincidirem com os pixels reais da tela (ADR-006).
 export function addText(scene: Phaser.Scene, x: number, y: number, text: string, options: TextOptions = {}): Phaser.GameObjects.Text {
   return scene.add.text(x, y, text, {
+    resolution: resolutionOf(scene.game),
     fontFamily: FONT_FAMILY,
     fontSize: `${options.size ?? 11}px`,
     color: options.color ?? COLORS.ink,

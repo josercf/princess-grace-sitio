@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { firstSceneFor } from '../core/navigation';
 import { createContext, ctx } from '../game/context';
+import { useDeviceResolution } from '../game/resolution';
 import { addButton, addText, COLORS, FONT_FAMILY } from '../game/ui';
 
 const BASE = import.meta.env.BASE_URL;
@@ -28,6 +29,7 @@ export class BootScene extends Phaser.Scene {
   }
 
   async create(): Promise<void> {
+    useDeviceResolution(this);
     await document.fonts.load(`11px ${FONT_FAMILY}`, 'AaÇçãéô').catch(() => undefined);
     if (this.failed) {
       this.showError();

@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { ctx } from '../game/context';
+import { useDeviceResolution } from '../game/resolution';
 import { addButton, addText, COLORS, FILLS } from '../game/ui';
 
 export class MenuScene extends Phaser.Scene {
@@ -8,6 +9,7 @@ export class MenuScene extends Phaser.Scene {
   }
 
   create(): void {
+    useDeviceResolution(this);
     const context = ctx(this);
     this.add.rectangle(160, 90, 320, 180, FILLS.ink, 0.7).setInteractive();
     this.add.rectangle(160, 90, 200, 136, FILLS.paper).setStrokeStyle(2, FILLS.pinkDark);

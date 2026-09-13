@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import type { Locale } from '../core/locale';
 import { translate } from '../core/strings';
 import { ctx } from '../game/context';
+import { useDeviceResolution } from '../game/resolution';
 import { addButton, addText, COLORS, FILLS } from '../game/ui';
 
 export class LanguageScene extends Phaser.Scene {
@@ -10,6 +11,7 @@ export class LanguageScene extends Phaser.Scene {
   }
 
   create(data: { returnTo?: string } = {}): void {
+    useDeviceResolution(this);
     this.cameras.main.setBackgroundColor('#4a1f5c');
     const title = `${translate('pt', 'language.title')}\n${translate('en', 'language.title')}`;
     addText(this, 160, 50, title, { size: 14, color: COLORS.paper, align: 'center' }).setOrigin(0.5);

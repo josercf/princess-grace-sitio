@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { ctx } from '../game/context';
+import { useDeviceResolution } from '../game/resolution';
 import { addButton, addText, COLORS, FILLS } from '../game/ui';
 
 export class PhaseCompleteScene extends Phaser.Scene {
@@ -8,6 +9,7 @@ export class PhaseCompleteScene extends Phaser.Scene {
   }
 
   create(): void {
+    useDeviceResolution(this);
     const context = ctx(this);
     this.cameras.main.setBackgroundColor('#4a1f5c');
     addText(this, 160, 50, context.i18n.t('phase1.complete'), { size: 20, color: COLORS.paper, align: 'center' }).setOrigin(0.5);

@@ -3,6 +3,7 @@ import { CHALLENGES } from '../core/challenges';
 import { recordAttempt } from '../core/difficulty';
 import { ctx } from '../game/context';
 import { showDialogue } from '../game/overlays';
+import { useDeviceResolution } from '../game/resolution';
 import { testState } from '../game/testState';
 import { addText, COLORS, FILLS } from '../game/ui';
 import { VIEWS, type ViewChallengeId } from './challenges';
@@ -13,6 +14,7 @@ export class ChallengeScene extends Phaser.Scene {
   }
 
   create(data: { challengeId: ViewChallengeId }): void {
+    useDeviceResolution(this);
     const context = ctx(this);
     const challenge = CHALLENGES[data.challengeId];
     const question = challenge.generate(context.progress.difficulty.level, context.rng, context.i18n.locale);

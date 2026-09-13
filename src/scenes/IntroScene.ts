@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { formatCompanionName, MAX_NAME_LENGTH } from '../core/names';
 import { ctx } from '../game/context';
 import { showDialogue } from '../game/overlays';
+import { useDeviceResolution } from '../game/resolution';
 import { addButton, addText, COLORS, FILLS, setButtonEnabled } from '../game/ui';
 
 const LETTERS = Array.from('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
@@ -16,6 +17,7 @@ export class IntroScene extends Phaser.Scene {
   }
 
   async create(): Promise<void> {
+    useDeviceResolution(this);
     this.name = '';
     const context = ctx(this);
     this.cameras.main.setBackgroundColor('#4a1f5c');

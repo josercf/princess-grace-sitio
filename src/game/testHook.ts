@@ -44,7 +44,8 @@ export function installTestHook(game: Phaser.Game): void {
     const camera = obj.scene.cameras.main;
     const scrollFactor = (obj as unknown as { scrollFactorX?: number }).scrollFactorX ?? 1;
     const rect = game.canvas.getBoundingClientRect();
-    const scale = rect.width / game.scale.width;
+    // Coordenada base -> pixel interno (zoom da câmera) -> pixel CSS.
+    const scale = (camera.zoom * rect.width) / game.scale.width;
     return {
       x: rect.left + (bounds.centerX - camera.scrollX * scrollFactor) * scale,
       y: rect.top + (bounds.centerY - camera.scrollY * scrollFactor) * scale,
